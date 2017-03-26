@@ -18,6 +18,8 @@ Route::group(['prefix' => 'department'], function () {
     Route::post('/attach', 'DepartmentController@attach');
 
     Route::get('/{department}/employees', 'DepartmentController@employees');
+
+    Route::get('/all', 'DepartmentController@all');
 });
 
 Route::group(['prefix' => 'employee'], function () {

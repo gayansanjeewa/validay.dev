@@ -82,4 +82,28 @@ class DepartmentService
         return response()->json(compact('responce'));
     }
 
+    public function all()
+    {
+        $this->department = Department::all();
+        $departments = $this->buildTree();
+        return response()->json(compact('departments'));
+    }
+
+
+    private function buildTree()
+    {
+        $tree = [];
+        foreach ($this->department as $item) {
+            $tree[$item->parent_id][] = $item;
+        }
+
+        foreach ($this->department as $item) {
+            if (isset($tree[$item->id])) {
+                $item->departments = $tree[$item->id]; //
+            }
+        }
+
+        return current($tree);
+    }
+
 }

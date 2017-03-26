@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     protected $fillable = ['name', 'parent_id'];
+    protected $hidden = ['pivot', 'created_at', 'updated_at'];
+    protected $departments = '';
 
     /**
      * @param $department

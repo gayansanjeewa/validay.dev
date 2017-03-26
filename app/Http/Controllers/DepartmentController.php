@@ -30,4 +30,9 @@ class DepartmentController extends Controller
         $data = request()->all();
         return $this->departmentService->attach($data);
     }
+
+    public function all()
+    {
+        return $this->departmentService->all();
+    }
 }
