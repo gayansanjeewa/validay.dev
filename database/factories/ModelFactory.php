@@ -1,5 +1,8 @@
 <?php
 
+use App\Department;
+use App\Employee;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -20,5 +23,18 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(Department::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word
+    ];
+});
+
+$factory->define(Employee::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->firstName
     ];
 });
