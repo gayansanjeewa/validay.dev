@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Queue\InvalidPayloadException;
 
-class InvalidParentDepartmentGiven extends InvalidPayloadException
+class InvalidDepartmentException extends InvalidPayloadException
 {
     protected $message = '';
     protected $code = 404;

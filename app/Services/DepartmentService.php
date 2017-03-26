@@ -3,11 +3,14 @@
 namespace App\Services;
 
 use App\Department;
-use App\Exceptions\InvalidParentDepartmentGiven;
+use App\Exceptions\InvalidDepartmentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DepartmentService
 {
+    protected $department;
+    protected $employee;
+
     public function employeesForDepartment($department)
     {
         $department = Department::findByName($department, ['employees']);
@@ -42,7 +45,41 @@ class DepartmentService
     private function validParent($parentId)
     {
         if (empty(Department::find($parentId))) {
-            throw new InvalidParentDepartmentGiven('Invalid parent Id');
+            throw new InvalidDepartmentException('Invalid parent id');
         }
     }
+
+    public function attach($data)
+    {
+        $data = unwrap($data, STEP1)['attach'];
+        $this->validateDepartment($data['department_id']);
+        $this->validateEmployee($data['employee_id']);
+        return $this->associate();
+    }
+
+    private function validateDepartment($departmentId)
+    {
+        $this->department = Department::find($departmentId);
+        if (empty($this->department)) {
+            throw new InvalidDepartmentException('Invalid department id');
+        }
+    }
+
+    private function validateEmployee($employeeId)
+    {
+        $this->employee = Department::find($employeeId);
+        if (empty($this->employee)) {
+            throw new InvalidDepartmentException('Invalid department id');
+        }
+    }
+
+    private function associate()
+    {
+        $this->department->employees()->detach($this->employee);
+        $this->department->employees()->attach($this->employee);
+
+        $responce = 'success';
+        return response()->json(compact('responce'));
+    }
+
 }

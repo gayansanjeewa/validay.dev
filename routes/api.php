@@ -12,7 +12,15 @@
 */
 
 //Route::middleware('auth:api')->group(function () {
-    Route::post('/department', 'DepartmentController@create');
+Route::group(['prefix' => 'department'], function () {
+    Route::post('/', 'DepartmentController@create');
 
-    Route::get('/department/{department}/employees', 'DepartmentController@employees');
+    Route::post('/attach', 'DepartmentController@attach');
+
+    Route::get('/{department}/employees', 'DepartmentController@employees');
+});
+
+Route::group(['prefix' => 'employee'], function () {
+    Route::post('/', 'EmployeeController@create');
+});
 //});

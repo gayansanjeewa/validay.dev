@@ -18,10 +18,6 @@ class AddNewDepartmentTest extends TestCase
      */
     public function it_creates_a_new_department()
     {
-        //Given I wan't to create a department
-        //When I creates a new department
-        //Then successfully creates a department
-
         $postData = [
             'data' => [
                 'department' => [
@@ -35,4 +31,24 @@ class AddNewDepartmentTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * @test
+     */
+    public function it_attach_employee_to_a_department()
+    {
+        $department = factory(Department::class)->create();
+        $employee = factory(Employee::class)->create();
+
+        $postData = [
+            'data' => [
+                'attach' => [
+                    "department_id" => $department->id,
+                    "employee_id" => $employee->id
+                ]
+            ]
+        ];
+
+        $this->json('POST', 'api/department/attach', $postData)
+            ->assertStatus(200);
+    }
 }

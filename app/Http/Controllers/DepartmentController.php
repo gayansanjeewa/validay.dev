@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\DepartmentService;
+use function MongoDB\BSON\toJSON;
 
 class DepartmentController extends Controller
 {
@@ -22,5 +23,11 @@ class DepartmentController extends Controller
     public function employees($department)
     {
         return $this->departmentService->employeesForDepartment($department);
+    }
+
+    public function attach()
+    {
+        $data = request()->all();
+        return $this->departmentService->attach($data);
     }
 }
