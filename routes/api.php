@@ -11,18 +11,23 @@
 |
 */
 
-//Route::middleware('auth:api')->group(function () {
-Route::group(['prefix' => 'department'], function () {
-    Route::post('/', 'DepartmentController@create');
+Route::middleware('jwt.auth')->group(function () {
+    Route::group(['prefix' => 'department'], function () {
+        Route::post('/', 'DepartmentController@create');
 
-    Route::post('/attach', 'DepartmentController@attach');
+        Route::post('/attach', 'DepartmentController@attach');
 
-    Route::get('/{department}/employees', 'DepartmentController@employees');
+        Route::get('/{department}/employees', 'DepartmentController@employees');
 
-    Route::get('/all', 'DepartmentController@all');
+        Route::get('/all', 'DepartmentController@all');
+    });
+
+    Route::group(['prefix' => 'employee'], function () {
+        Route::post('/', 'EmployeeController@create');
+    });
 });
 
-Route::group(['prefix' => 'employee'], function () {
-    Route::post('/', 'EmployeeController@create');
-});
-//});
+Route::post('/register', 'TokenAuthController@register');
+Route::post('/authenticate', 'TokenAuthController@authenticate');
+Route::get('/authenticate/user', 'TokenAuthController@getAuthenticatedUser');
+

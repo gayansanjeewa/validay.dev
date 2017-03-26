@@ -10,7 +10,14 @@ class DepartmentController extends Controller
 
     public function __construct(DepartmentService $departmentService)
     {
+//        $this->middleware('jwt.auth', ['except' => ['index']]);
         $this->departmentService = $departmentService;
+    }
+
+    public function index()
+    {
+        $data = request()->all();
+        return $this->departmentService->create($data);
     }
 
     public function create()
