@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\DepartmentService;
-use function MongoDB\BSON\toJSON;
 
 class DepartmentController extends Controller
 {
