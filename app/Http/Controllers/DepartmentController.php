@@ -13,6 +13,12 @@ class DepartmentController extends Controller
         $this->departmentService = $departmentService;
     }
 
+    public function create()
+    {
+        $data = request()->all();
+        return $this->departmentService->create($data);
+    }
+
     public function employees($department)
     {
         return $this->departmentService->employeesForDepartment($department);

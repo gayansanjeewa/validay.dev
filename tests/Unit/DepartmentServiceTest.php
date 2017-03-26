@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Department;
 use App\Employee;
+use App\Services\DepartmentService;
+use Mockery;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -12,6 +14,16 @@ class DepartmentServiceTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
+
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        Mockery::close();
+    }
 
     /**
      * @test
@@ -46,4 +58,22 @@ class DepartmentServiceTest extends TestCase
         // Then I find that department with its employees
         $this->assertNotEmpty($search['employees']);
     }
+
+//    /**
+//     * @test
+//     */
+//    public function the_created_department_exists_in_db()
+//    {
+//        $postData = [
+//            'name' => 'Hr',
+//            'parent_id' => null
+//        ];
+//
+//        $departmentService = Mockery::mock(DepartmentService::class);
+//        $departmentService->shouldReceive('create')->once()->andReturn('mocked');
+//
+//        $search = Department::findByName($department->name);
+//
+//        $this->assertEquals($search->name, $department->name);
+//    }
 }

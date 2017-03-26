@@ -12,5 +12,7 @@
 */
 
 //Route::middleware('auth:api')->group(function () {
+    Route::post('/department', 'DepartmentController@create');
+
     Route::get('/department/{department}/employees', 'DepartmentController@employees');
 //});
